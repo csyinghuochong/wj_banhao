@@ -1,8 +1,4 @@
-.cproject
-.project
-.pydevproject
 .sconsign.dblite
-.cspro
 .bytes
 
 *.pyc
@@ -28,7 +24,6 @@ _ReSharper.CSharp/
 *.sdf
 /CSharp/CSharp.sln.ide
 /Unity/Library
-/Unity/Packages/
 /Unity/ios/Libraries/
 /Unity/ios/Data/
 /Unity/ios/Data/Resources/
@@ -67,7 +62,6 @@ Unity2/
 /Unity/HybridCLRData/
 /Unity/Assets/Res/XAsset/Rules.asset
 /Unity/Assembly-CSharp.csproj
-/Unity/Packages/packages-lock.json
 /Excel/~$*.xlsx
 /.vscode
 SampleClass.cs
@@ -75,9 +69,6 @@ Unity/UnityProject.zip
 Unity/Android
 start_publish_binbeta.bat
 Server/App/Server.App.csproj.user
-Unity/MeshBakerCore.csproj
-Unity/MeshBakerEditor.csproj
-Unity/MeshBakerExamples.csproj
 start_1_server10.bat
 start_1_server2.bat
 start_1_server3.bat
