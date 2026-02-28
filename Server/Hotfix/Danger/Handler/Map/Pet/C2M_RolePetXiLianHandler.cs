@@ -185,6 +185,11 @@ namespace ET
                     unit.GetComponent<TaskComponent>().TriggerTaskCountryEvent(TaskTargetType.PetXiLian10010086_33, 0, 1);
                 }
             }
+
+			if (request.AddNumber)
+			{
+				unit.GetComponent<NumericComponent>().ApplyChange(null, NumericType.DayPetXilianNumber, 1, 0);
+            }
             unit.GetComponent<PetComponent>().CheckPetPingFen();
             unit.GetComponent<PetComponent>().CheckPetZiZhi();
 

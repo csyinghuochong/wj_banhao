@@ -2207,6 +2207,7 @@ message C2M_RolePetXiLian // IActorLocationRequest
 	int64 BagInfoID = 2;
 	int32 CostItemNum = 3;
 	string ParamInfo = 4;
+	bool AddNumber = 5;
 }
 
 message M2C_RolePetXiLian  // IActorLocationResponse

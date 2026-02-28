@@ -6,6 +6,7 @@ namespace ET
 {
     public class UIPetXiLianComponent : Entity, IAwake,IDestroy
     {
+        public Text Text_XiLianNumber;
         public GameObject Text_ItemName;
         public GameObject Img_ItemIcon;
         public GameObject Img_ItemQuality;
@@ -32,7 +33,9 @@ namespace ET
             self.Img_ItemIcon = rc.Get<GameObject>("Img_ItemIcon");
             self.Img_ItemQuality = rc.Get<GameObject>("Img_ItemQuality");
             self.UIPetInfo1 = rc.Get<GameObject>("UIPetInfo1");
-         
+            self.Text_XiLianNumber = rc.Get<GameObject>("Text_XiLianNumber").GetComponent<Text>();
+
+
             self.Btn_XiLian = rc.Get<GameObject>("Btn_XiLian");
             ButtonHelp.AddListenerEx(self.Btn_XiLian, () => { self.OnClickXiLian().Coroutine(); });
 
@@ -73,6 +76,14 @@ namespace ET
 
         public static async ETTask OnClickXiLian(this UIPetXiLianComponent self)
         {
+            Unit unit = UnitHelper.GetMyUnitFromZoneScene( self.ZoneScene() );
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+            if (numericComponent.GetAsInt(NumericType.DayPetXilianNumber) >= 50)
+            {
+                FloatTipManager.Instance.ShowFloatTip(GameSettingLanguge.LoadLocalization("今日宠物洗练次数达到上限！"));
+                return;
+            }
+
             if (self.RolePetInfo == null)
             {
                 FloatTipManager.Instance.ShowFloatTip(GameSettingLanguge.LoadLocalization("请选择宠物！"));
@@ -127,11 +138,12 @@ namespace ET
 
             long oldSkin = self.RolePetInfo.SkinId;
             PetComponent petComponent = self.ZoneScene().GetComponent<PetComponent>();
-            await petComponent.RequestXiLian(self.CostItemInfo.BagInfoID, self.RolePetInfo.Id);
+            await petComponent.RequestXiLian(self.CostItemInfo.BagInfoID, self.RolePetInfo.Id, true);
             if (self.IsDisposed)
             {
                 return;
             }
+            self.UpdatePetXilianNumber();
             if (oldSkin == self.RolePetInfo.SkinId)
             {
                 return;
@@ -144,6 +156,14 @@ namespace ET
             List<KeyValuePair> oldPetSkin = petComponent.GetPetSkinCopy();
             ui.GetComponent<UIPetChouKaGetComponent>().OnInitUI(petComponent.GetPetInfoByID(self.RolePetInfo.Id), oldPetSkin, null);
         }
+
+        public static void UpdatePetXilianNumber(this UIPetXiLianComponent self)
+        {
+            Unit unit = UnitHelper.GetMyUnitFromZoneScene(self.ZoneScene());
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+
+            self.Text_XiLianNumber.text = numericComponent.GetAsInt(NumericType.DayPetXilianNumber).ToString() + "/50";
+         }
 
         public static void OnXiLianUpdate(this UIPetXiLianComponent self)
         { 
@@ -196,6 +216,7 @@ namespace ET
             self.Text_ItemName.GetComponent<Text>().text = "";
             self.UpdateConsume().Coroutine();
             self.UIPetInfoShowComponent?.OnInitData(self.RolePetInfo);
+            self.UpdatePetXilianNumber();
         }
 
         public static async ETTask UpdateConsume(this UIPetXiLianComponent self)

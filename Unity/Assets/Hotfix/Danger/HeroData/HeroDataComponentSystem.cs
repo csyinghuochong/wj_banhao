@@ -330,6 +330,9 @@ namespace ET
             numericComponent.ApplyValue(NumericType.ItemXiLianNumber, 0, notice);
             numericComponent.ApplyValue(NumericType.PaiMaiTodayGold, 0, notice);
 
+            numericComponent.ApplyValue(NumericType.DayPetXilianNumber, 0, notice);
+            
+
             //月卡次数用完，则清空标志
             int yuekatimes = numericComponent.GetAsInt(NumericType.YueKaRemainTimes);
             numericComponent.ApplyValue(NumericType.YueKaEndTime, yuekatimes, notice);

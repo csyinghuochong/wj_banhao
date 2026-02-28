@@ -592,7 +592,7 @@ namespace ET
                 if ((itemConfig.ItemSubType == 108
                 || itemConfig.ItemSubType == 109) && petInfo != null)
                 {
-                    petComponent.RequestXiLian(self.BagInfo.BagInfoID, petInfo.Id).Coroutine();
+                    petComponent.RequestXiLian(self.BagInfo.BagInfoID, petInfo.Id,false).Coroutine();
                     self.OnCloseTips();
                     return;
                 }
