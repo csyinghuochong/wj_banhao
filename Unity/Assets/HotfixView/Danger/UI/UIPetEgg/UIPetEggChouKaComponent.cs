@@ -114,7 +114,7 @@ namespace ET
             Unit unit = UnitHelper.GetMyUnitFromZoneScene(self.ZoneScene());
             NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
             int totalTimes = numericComponent.GetAsInt(NumericType.PetExploreNumber);
-            self.Text_TotalNumber.GetComponent<Text>().text = string.Format(GameSettingLanguge.LoadLocalization("今日累计次数：{0}"), totalTimes);
+            self.Text_TotalNumber.GetComponent<Text>().text = string.Format(GameSettingLanguge.LoadLocalization("今日累计次数：{0}/50"), totalTimes);
 
             self.Text_PetExploreLuckly.GetComponent<Text>().text = $"{numericComponent.GetAsInt(NumericType.PetExploreLuckly)}";
         }
@@ -157,6 +157,14 @@ namespace ET
 
         public static async ETTask OnBtn_ChouKa(this UIPetEggChouKaComponent self, int choukaType)
         {
+            Unit unit = UnitHelper.GetMyUnitFromZoneScene( self.ZoneScene() );
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+            if (choukaType + numericComponent.GetAsInt(NumericType.DayPetEggChouKaNumber) > 50)
+            {
+                FloatTipManager.Instance.ShowFloatTip(GameSettingLanguge.LoadLocalization("今天宠物探索次数已达上限！"));
+                return;
+            }
+
             BagComponent bagComponent = self.ZoneScene().GetComponent<BagComponent>();
             if (bagComponent.GetBagLeftCell() < choukaType)
             {

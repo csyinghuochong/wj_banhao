@@ -6,6 +6,7 @@ namespace ET
 {
     public class UIPetHeXinChouKaComponent: Entity, IAwake, IDestroy
     {
+        public Text Text_DayHeXinNumber;
         public GameObject ItemImageIcon10;
         public GameObject RewardItemListNode;
         public GameObject Btn_PetEggLucklyExplain;
@@ -35,6 +36,7 @@ namespace ET
             self.Text_DiamondNumber = rc.Get<GameObject>("Text_DiamondNumber");
             self.Text_CostNumber = rc.Get<GameObject>("Text_CostNumber");
             self.ItemImageIcon = rc.Get<GameObject>("ItemImageIcon");
+            self.Text_DayHeXinNumber = rc.Get<GameObject>("Text_DayHeXinNumber").GetComponent<Text>();
 
             self.Btn_PetEggLucklyExplain.GetComponent<Button>().onClick.AddListener(() =>
             {
@@ -52,6 +54,7 @@ namespace ET
             self.UpdateMoney();
             self.OnUpdateInfo();
             self.UpdateReward();
+            self.UpdateDayHeXinNumber();
         }
     }
 
@@ -81,6 +84,13 @@ namespace ET
         public static void OnBtn_ChouKaNumReward(this UIPetHeXinChouKaComponent self)
         {
             UIHelper.Create(self.ZoneScene(), UIType.UIPetHeXinChouKaReward).Coroutine();
+        }
+
+        public static void UpdateDayHeXinNumber(this UIPetHeXinChouKaComponent self)
+        {
+            Unit unit = UnitHelper.GetMyUnitFromZoneScene( self.ZoneScene() );
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+            self.Text_DayHeXinNumber.text = $"今日累计次数:{numericComponent.GetAsInt(NumericType.DayPetHeXinChouKaNumber)}/50";
         }
 
         public static void OnUpdateInfo(this UIPetHeXinChouKaComponent self)
@@ -142,6 +152,14 @@ namespace ET
 
         public static async ETTask OnBtn_ChouKa(this UIPetHeXinChouKaComponent self, int choukaType)
         {
+            Unit unit = UnitHelper.GetMyUnitFromZoneScene(self.ZoneScene());
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+            if (choukaType + numericComponent.GetAsInt(NumericType.DayPetHeXinChouKaNumber) > 50)
+            {
+                FloatTipManager.Instance.ShowFloatTip("今日宠物之核探索次数不足！");
+                return;
+            }
+
             BagComponent bagComponent = self.ZoneScene().GetComponent<BagComponent>();
             if (bagComponent.GetBagLeftCell() < choukaType)
             {
@@ -194,6 +212,7 @@ namespace ET
 
             self.UpdateMoney();
             self.OnUpdateInfo();
+            self.UpdateDayHeXinNumber();
 
             UI ui = await UIHelper.Create(self.DomainScene(), UIType.UICommonReward);
             ui.GetComponent<UICommonRewardComponent>().OnUpdateUI(r2c_roleEquip.ReardList);

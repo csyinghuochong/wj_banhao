@@ -162,7 +162,7 @@ namespace ET
             Unit unit = UnitHelper.GetMyUnitFromZoneScene(self.ZoneScene());
             NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
 
-            self.Text_XiLianNumber.text = numericComponent.GetAsInt(NumericType.DayPetXilianNumber).ToString() + "/50";
+            self.Text_XiLianNumber.text = $"上限:{numericComponent.GetAsInt(NumericType.DayPetXilianNumber)}/50";
          }
 
         public static void OnXiLianUpdate(this UIPetXiLianComponent self)

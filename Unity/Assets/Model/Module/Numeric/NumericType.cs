@@ -197,6 +197,8 @@
         public const int WeChatOABind = 3197;
         public const int DayPetXilianNumber = 3198;
         public const int DayItemXilianNumber = 3199;
+        public const int DayPetEggChouKaNumber = 3200;
+        public const int DayPetHeXinChouKaNumber = 3201;
         public const int Max = 10000;
 
         public const int Now_MaxHp = 1002;                                       //生命总值

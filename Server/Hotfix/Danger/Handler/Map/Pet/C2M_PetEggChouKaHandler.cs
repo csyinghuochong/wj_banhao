@@ -79,6 +79,7 @@ namespace ET
             {
                 DropHelper.DropIDToDropItem_2(dropId, rewardItems);
             }
+            unit.GetComponent<NumericComponent>().ApplyChange(null, NumericType.DayPetEggChouKaNumber, request.ChouKaType, 0);
             unit.GetComponent<BagComponent>().OnAddItemData(rewardItems, string.Empty, $"{ItemGetWay.PetExplore}_{TimeHelper.ServerNow()}_{exploreLuck}");
             response.ReardList = rewardItems;
             reply();

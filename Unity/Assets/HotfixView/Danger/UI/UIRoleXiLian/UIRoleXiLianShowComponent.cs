@@ -231,7 +231,7 @@ namespace ET
 		{
 			Unit unit = UnitHelper.GetMyUnitFromZoneScene( self.ZoneScene() );
 			NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-			self.Text_ItemXiLianNumber.text = $"{numericComponent.GetAsInt(NumericType.DayItemXilianNumber)}/50";
+			self.Text_ItemXiLianNumber.text = $"上限:{numericComponent.GetAsInt(NumericType.DayItemXilianNumber)}/50";
         }
 
 		public static void UpdateAttribute(this UIRoleXiLianShowComponent self, BagInfo bagInfo)
