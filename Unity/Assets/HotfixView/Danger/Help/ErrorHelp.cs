@@ -212,7 +212,7 @@ namespace ET
             ErrorHintList.Add(ErrorCode.ERR_AlreadyPlant, "土地已经种植了");
             ErrorHintList.Add(ErrorCode.ERR_JiaYuanLevel, "家园等级不足");
             ErrorHintList.Add(ErrorCode.ERR_PeopleNumber, "人口已达上限");
-            ErrorHintList.Add(ErrorCode.ERR_JiaYuanSteal, "该作物已达偷取上限");
+            ErrorHintList.Add(ErrorCode.ERR_JiaYuanSteal, "协助其他玩家收获已达上限");
             ErrorHintList.Add(ErrorCode.ERR_PeopleNoEnough, "购买后人口超过上限");
             ErrorHintList.Add(ErrorCode.ERR_CanNotGather, "未成熟或者收获次数用完，请重登尝试");
             

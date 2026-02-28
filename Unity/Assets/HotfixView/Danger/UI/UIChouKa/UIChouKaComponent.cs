@@ -215,6 +215,15 @@ namespace ET
 
         public static async ETTask OnBtn_ChouKaOne(this UIChouKaComponent self, int times)
         {
+            Unit unit = UnitHelper.GetMyUnitFromZoneScene(self.ZoneScene());
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+            int totalTimes = numericComponent.GetAsInt(NumericType.ChouKa);
+            if (totalTimes + times > 50)
+            {
+                FloatTipManager.Instance.ShowFloatTip("今日探宝次数不足！");
+                return;
+            }
+
             C2M_ChouKaRequest m_ItemOperateWear = new C2M_ChouKaRequest() { ChapterId = self.TakeCardId, ChouKaType = times };
             M2C_ChouKaResponse r2c_roleEquip = (M2C_ChouKaResponse)await self.DomainScene().GetComponent<SessionComponent>().Session.Call(m_ItemOperateWear);
             if (r2c_roleEquip.Error != 0)
@@ -276,7 +285,7 @@ namespace ET
             Unit unit = UnitHelper.GetMyUnitFromZoneScene(self.ZoneScene());
             NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
             int totalTimes = numericComponent.GetAsInt(NumericType.ChouKa);
-            self.Text_TotalNumber.GetComponent<Text>().text = string.Format(GameSettingLanguge.LoadLocalization("今日累计次数：{0}"), totalTimes);
+            self.Text_TotalNumber.GetComponent<Text>().text = string.Format(GameSettingLanguge.LoadLocalization("今日累计次数：{0}/50"), totalTimes);
         }
 
         public static void OnUpdateMianFeiTime(this UIChouKaComponent self)
