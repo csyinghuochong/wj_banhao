@@ -331,6 +331,7 @@ namespace ET
             numericComponent.ApplyValue(NumericType.PaiMaiTodayGold, 0, notice);
 
             numericComponent.ApplyValue(NumericType.DayPetXilianNumber, 0, notice);
+            numericComponent.ApplyValue(NumericType.DayItemXilianNumber, 0, notice);
             
 
             //月卡次数用完，则清空标志

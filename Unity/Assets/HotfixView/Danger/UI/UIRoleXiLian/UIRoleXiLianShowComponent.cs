@@ -7,7 +7,8 @@ namespace ET
 {
 	public class UIRoleXiLianShowComponent : Entity, IAwake, IDestroy
 	{
-		public GameObject Text_TotalNumber;
+		public Text Text_ItemXiLianNumber;
+        public GameObject Text_TotalNumber;
 		public GameObject Btn_XiLianNumReward;
 		public GameObject Btn_XiLianExplain;
 		public GameObject EquipSet;
@@ -84,7 +85,9 @@ namespace ET
 			self.Obj_EquipPropertyText = rc.Get<GameObject>("Obj_EquipPropertyText");
 			self.EquipBaseSetList = rc.Get<GameObject>("EquipBaseSetList");
 			self.NeedDiamond = rc.Get<GameObject>("NeedDiamond");
-			self.NeedDiamond.GetComponent<Text>().text = GlobalValueConfigCategory.Instance.Get(73).Value;
+			self.Text_ItemXiLianNumber = rc.Get<GameObject>("Text_ItemXiLianNumber").GetComponent<Text>();
+
+            self.NeedDiamond.GetComponent<Text>().text = GlobalValueConfigCategory.Instance.Get(73).Value;
 			
 			self.BagComponent = self.ZoneScene().GetComponent<BagComponent>();
 			UserInfo userInfo = self.ZoneScene().GetComponent<UserInfoComponent>().UserInfo;
@@ -219,8 +222,17 @@ namespace ET
 		public static void OnUpdateUI(this UIRoleXiLianShowComponent self)
 		{
 			self.XilianBagInfo = null;
-			self.OnEquiListUpdate(0).Coroutine();
+			self.UpdateItemXiLianNumber();
+
+            self.OnEquiListUpdate(0).Coroutine();
 		}
+
+		public static void UpdateItemXiLianNumber(this UIRoleXiLianShowComponent self)
+		{
+			Unit unit = UnitHelper.GetMyUnitFromZoneScene( self.ZoneScene() );
+			NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+			self.Text_ItemXiLianNumber.text = $"{numericComponent.GetAsInt(NumericType.DayItemXilianNumber)}/50";
+        }
 
 		public static void UpdateAttribute(this UIRoleXiLianShowComponent self, BagInfo bagInfo)
 		{
@@ -426,7 +438,15 @@ namespace ET
 				return;
 			}
 
-			BagInfo bagInfo = self.XilianBagInfo;
+            Unit unit = UnitHelper.GetMyUnitFromZoneScene(self.ZoneScene());
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+			if (times + numericComponent.GetAsInt(NumericType.DayItemXilianNumber) > 50)
+			{
+                FloatTipManager.Instance.ShowFloatTip(GameSettingLanguge.LoadLocalization("今日道具洗练次数达到上限！"));
+                return;
+			}
+
+            BagInfo bagInfo = self.XilianBagInfo;
 			if (times == 1)
 			{
 				ItemConfig itemConfig = ItemConfigCategory.Instance.Get(bagInfo.ItemID);
@@ -463,8 +483,7 @@ namespace ET
 					return;
 				}
 			}
-
-			Unit unit = UnitHelper.GetMyUnitFromZoneScene( self.ZoneScene() );
+			
 			int oldXiLianDu = unit.GetComponent<NumericComponent>().GetAsInt(NumericType.ItemXiLianDu);
 			
 			C2M_ItemXiLianRequest c2M_ItemHuiShouRequest = new C2M_ItemXiLianRequest() { OperateBagID = bagInfo.BagInfoID, Times = times };
@@ -488,7 +507,7 @@ namespace ET
 				uitex.GetComponent<UIRoleXiLianTenComponent>().OnInitUI(bagInfo, r2c_roleEquip.ItemXiLianResults);
 				self.OnXiLianReturn();
 			}
-
+            self.UpdateItemXiLianNumber();
             //记录tap数据
             AccountInfoComponent accountInfoComponent = self.ZoneScene().GetComponent<AccountInfoComponent>();
             string serverName = accountInfoComponent.ServerName;

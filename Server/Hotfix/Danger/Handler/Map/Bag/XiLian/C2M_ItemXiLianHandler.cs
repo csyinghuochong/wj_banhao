@@ -152,6 +152,7 @@ namespace ET
                     addXilian = (int)(addXilian * 0.7f);
                 }
                 unit.GetComponent<NumericComponent>().ApplyChange(null, NumericType.ItemXiLianDu, addXilian * request.Times, 0, true);
+                unit.GetComponent<NumericComponent>().ApplyChange(null, NumericType.DayItemXilianNumber, request.Times, 0);
                 //unit.GetComponent<NumericComponent>().ApplyChange(null, NumericType.Now_XiLian,1, 0, true);
                 reply();
                 await ETTask.CompletedTask;

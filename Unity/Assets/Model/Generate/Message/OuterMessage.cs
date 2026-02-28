@@ -4659,6 +4659,9 @@ namespace ET
 		[ProtoMember(4)]
 		public string ParamInfo { get; set; }
 
+		[ProtoMember(5)]
+		public bool AddNumber { get; set; }
+
 	}
 
 	[Message(OuterOpcode.M2C_RolePetXiLian)]
