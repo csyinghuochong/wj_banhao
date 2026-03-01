@@ -221,7 +221,10 @@ namespace ET
             ErrorHintList.Add(ErrorCode.ERR_PopularizeNot, "被推广人不存在");
             ErrorHintList.Add(ErrorCode.ERR_PopularizeMax, "被推广次数已达上限");
             ErrorHintList.Add(ErrorCode.ERR_HappyMove_CD, "移动在冷却中!");
+            ErrorHintList.Add(ErrorCode.ERR_AleardyMaxCell, "已经达到最大格子数!");
             
+
+
 
             ErrorHintList.Add(ErrorCode.ERR_ModifyData, "数据异常,请稍后再试");
             ErrorHintList.Add(ErrorCode.ERR_PackageFrequent, "消息异常,请稍后再试");
