@@ -1027,6 +1027,15 @@ namespace ET
                 }
             }
 
+            //30090001-30090010
+            for (int taskid = 30090001; taskid <= 30090010; taskid++)
+            {
+                if (!self.RoleComoleteTaskList.Contains(taskid))
+                {
+                    self.RoleComoleteTaskList.Add(taskid);
+                }
+            }
+
             //触发一下搜集道具类型的任务
             for (int i = 0; i < self.RoleTaskList.Count; i++)
             {

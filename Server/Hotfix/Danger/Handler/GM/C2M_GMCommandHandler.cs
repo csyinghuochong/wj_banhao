@@ -109,8 +109,18 @@ namespace ET
                     //激活全部精灵
                     unit.GetComponent<ChengJiuComponent>().OnGmGaoJi();
 
-					//激活试炼之地所有层数
-					 int trialFubenid = TowerHelper.GetLastTowerIdByScene(SceneTypeEnum.TrialDungeon);
+					int occ = unit.GetComponent<UserInfoComponent>().UserInfo.Occ;
+					int occtwo = unit.GetComponent<UserInfoComponent>().UserInfo.OccTwo;
+					if (occtwo == 0)
+					{
+                        //转职
+                        unit.GetComponent<SkillSetComponent>().OnChangeOccTwoRequest(occ* 100 + 1);
+                    }
+
+                    
+
+                    //激活试炼之地所有层数
+                    int trialFubenid = TowerHelper.GetLastTowerIdByScene(SceneTypeEnum.TrialDungeon);
 					 unit.GetComponent<NumericComponent>().ApplyValue(NumericType.TrialDungeonId, trialFubenid);
 
                     //激活家园里的美味大师//激活家园里的菜谱
