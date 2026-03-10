@@ -1879,7 +1879,7 @@ namespace ET
                 "1#10000157#99999",
                 "1#17002003#1",
                 "1#10000159#9999",
-                "1#10000174#10",
+                "1#10000174#1",
             };
 
             self.AdditionalCellNum[0] = ConfigHelper.BuyBagCellCosts.Count; 
