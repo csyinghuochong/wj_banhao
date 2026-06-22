@@ -1084,6 +1084,7 @@ namespace ET
                 { ItemGetWay.ActivityNewYear, "新年活动" },
                 { ItemGetWay.Fashion, "时装" },
                 { ItemGetWay.PetEggPutOut, "宠物蛋取回" },
+                { ItemGetWay.GatherOther, "协作守护" },
                 { ItemGetWay.Activity, "活动" },
         };
 

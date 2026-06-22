@@ -1012,10 +1012,28 @@ namespace ET
                 return;
             }
 
-            string[] iteminfo = dataPaams.Split('_');
-            int itemId = int.Parse(iteminfo[0]);
+
+
+            string[] iteminfo = dataPaams.Split('|');
+
+            string[] getWayInfo = iteminfo[0].Split('_');
+            int getType = int.Parse(getWayInfo[0]);
+
+
+            int itemId = int.Parse(iteminfo[1]);
             ItemConfig itemConfig = ItemConfigCategory.Instance.Get(itemId);
-            FloatTipManager.Instance.ShowFloatTip(string.Format(GameSettingLanguge.LoadLocalization("获得物品 {0} x{1}"), itemConfig.GetItemName(), iteminfo[1]));
+
+
+            if (getType == ItemGetWay.GatherOther)
+            {
+                FloatTipManager.Instance.ShowFloatTip(string.Format(GameSettingLanguge.LoadLocalization("感谢您协助其他玩家完成收获，您获得物品 {0} x{1}"), itemConfig.GetItemName(), iteminfo[2]));
+
+            }
+            else
+            {
+                FloatTipManager.Instance.ShowFloatTip(string.Format(GameSettingLanguge.LoadLocalization("获得物品 {0} x{1}"), itemConfig.GetItemName(), iteminfo[2]));
+
+            }
         }
 
         public static void OnUpdateHP(this UIMainComponent self, int sceneType, Unit defend, Unit attack, long hurtvalue)

@@ -1285,6 +1285,7 @@ namespace ET
                         leftNum = 0;
                     }
                     userBagInfo.ItemNum = newNum;
+                    userBagInfo.GetWay = getWay;
                     m2c_bagUpdate.BagInfoUpdate.Add(userBagInfo);
 
                     if (leftNum == 0)

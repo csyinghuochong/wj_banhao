@@ -123,7 +123,10 @@ namespace ET
             ErrorHintList.Add(ErrorCode.Err_OnLineTimeNotFenXiang, "在线时间不足30分钟无法分享");
             ErrorHintList.Add(ErrorCode.ERR_LevelIsNotFenXiang, "领取分享奖励需要等级达到10级且在线时间达到30分钟");
             ErrorHintList.Add(ErrorCode.ERR_HuoYueNot, "活跃不足30点不能分享");
+            ErrorHintList.Add(ErrorCode.ERR_GatherXiezuoTimesIsNot, "每日家园协作收获次数最多五次");
             
+
+
 
             ErrorHintList.Add(ErrorCode.ERR_FangChengMi_Tip1, "您目前为未成年人账号，已被纳入防沉迷系统。根据国家新闻出版署《关于进一步严格管理切实防止未成年人沉迷网络游戏的通知》，仅每周五、周六、周日和法定节假日每日20时至21时提供1小时网络游戏服务。您今日游戏剩余时间{0}分钟。");
             ErrorHintList.Add(ErrorCode.ERR_FangChengMi_Tip2, "您目前为未成年人账号，已被纳入防沉迷系统。根据国家新闻出版署《关于防止未成年人沉迷网络游戏的通知》，您已超出支付上限，无法继续充值。");
@@ -212,7 +215,7 @@ namespace ET
             ErrorHintList.Add(ErrorCode.ERR_AlreadyPlant, "土地已经种植了");
             ErrorHintList.Add(ErrorCode.ERR_JiaYuanLevel, "家园等级不足");
             ErrorHintList.Add(ErrorCode.ERR_PeopleNumber, "人口已达上限");
-            ErrorHintList.Add(ErrorCode.ERR_JiaYuanSteal, "协助其他玩家收获已达上限");
+            ErrorHintList.Add(ErrorCode.ERR_JiaYuanSteal, "该作物被协助收获次数已达上限");
             ErrorHintList.Add(ErrorCode.ERR_PeopleNoEnough, "购买后人口超过上限");
             ErrorHintList.Add(ErrorCode.ERR_CanNotGather, "未成熟或者收获次数用完，请重登尝试");
             

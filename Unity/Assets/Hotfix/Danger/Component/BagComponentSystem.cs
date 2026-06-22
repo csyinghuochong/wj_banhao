@@ -570,7 +570,13 @@ namespace ET
             if (self.RealAddItem)
             {
                 self.ZoneScene().GetComponent<ShoujiComponent>().OnGetItem(bagInfo.ItemID);
-                HintHelp.GetInstance().DataUpdate(DataType.BagItemAdd, $"{bagInfo.ItemID}_{addNum}");
+
+                if (string.IsNullOrEmpty(bagInfo.GetWay))
+                {
+                    bagInfo.GetWay = "0_0";
+                }
+
+                HintHelp.GetInstance().DataUpdate(DataType.BagItemAdd, $"{bagInfo.GetWay}|{bagInfo.ItemID}|{addNum}");
             }
         }
 
