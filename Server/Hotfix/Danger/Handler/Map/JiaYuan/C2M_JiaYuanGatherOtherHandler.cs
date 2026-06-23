@@ -43,6 +43,16 @@ namespace ET
                 }
 
                 JiaYuanOperate jiaYuanOperate = null;
+
+                MailInfo mailInfo = new MailInfo();
+                mailInfo.Status = 0;
+                mailInfo.Title = "家园协助收获";
+                mailInfo.MailId = IdGenerater.Instance.GenerateId();
+
+                string playerName = unit.GetComponent<UserInfoComponent>().UserInfo.Name;
+                int getItemId = 0;
+
+
                 switch (request.OperateType)
                 {
                     case 1:
@@ -84,6 +94,7 @@ namespace ET
                         jiaYuanOperate.UnitId = request.UnitId;
                         jiaYuanOperate.PlayerId = unit.Id;
                         jiaYuanOperate.PlayerName = unit.GetComponent<UserInfoComponent>().UserInfo.Name;
+                        getItemId = jiaYuanFarmConfig.GetItemID;
 
                         JiaYuanRecord jiaYuanRecord = new JiaYuanRecord()
                         {
@@ -129,6 +140,10 @@ namespace ET
                         jiaYuanOperate.OperateType = JiaYuanOperateType.GatherPasture;
                         jiaYuanOperate.UnitId = request.UnitId;
                         jiaYuanOperate.PlayerName = unit.GetComponent<UserInfoComponent>().UserInfo.Name;
+
+                        getItemId = jiaYuanPastureConfig.GetItemID;
+
+
                         JiaYuanRecord jiaYuanRecord_1 = new JiaYuanRecord()
                         {
                             OperateType = JiaYuanOperateType.GatherPasture,
@@ -140,6 +155,10 @@ namespace ET
                         break;
                 }
 
+                ItemConfig itemConfig = ItemConfigCategory.Instance.Get(getItemId);
+                mailInfo.Context = $"{playerName} 来您的家园协助收获了 {itemConfig.ItemName}，您收获如下道具。";
+                mailInfo.ItemList.Add( new BagInfo() {  ItemID = getItemId, ItemNum = 1 } );
+                MailHelp.SendUserMail(unit.DomainZone(), request.MasterId, mailInfo).Coroutine();
 
                 long gateServerId = DBHelper.GetGateServerId(unit.DomainZone());
                 G2T_GateUnitInfoResponse g2M_UpdateUnitResponse = (G2T_GateUnitInfoResponse)await ActorMessageSenderComponent.Instance.Call
