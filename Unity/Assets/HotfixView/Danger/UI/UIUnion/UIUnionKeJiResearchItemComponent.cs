@@ -54,6 +54,12 @@ namespace ET
             self.NameText.GetComponent<Text>().fontSize = GameSettingLanguge.Language == 0? 36 : 30;
         }
 
+        public static void SetYanJiu(this UIUnionKeJiResearchItemComponent self)
+        {
+            self.LvText.GetComponent<Text>().text = GameSettingLanguge.LoadLocalization("研究中");
+            UICommonHelper.SetImageGray(self.IconImg, false);
+        }
+
         public static void UpdateInfo(this UIUnionKeJiResearchItemComponent self, int position, int configId)
         {
             self.Position = position;

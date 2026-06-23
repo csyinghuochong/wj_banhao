@@ -148,7 +148,7 @@ namespace ET
                         continue;
                     }
 
-                    researchItemComponent.LvText.GetComponent<Text>().text = GameSettingLanguge.LoadLocalization("研究中");
+                    researchItemComponent.SetYanJiu();
                     break;
                 }
             }
@@ -287,6 +287,12 @@ namespace ET
             {
                 return;
             }
+            int kejiid = response.UnionInfo.UnionKeJiList[self.Position];
+
+            string kejiname = UnionKeJiConfigCategory.Instance.Get(kejiid).EquipSpaceName;
+            PopupTipHelp.OpenPopupTip_2( self.ZoneScene(), "系统提示",$"恭喜你{kejiname}已经开始研究,请耐心等待研究完成！", () => 
+            { 
+            } ).Coroutine();
 
             self.UnionMyInfo = response.UnionInfo;
             self.UpdateInfo(self.Position);
