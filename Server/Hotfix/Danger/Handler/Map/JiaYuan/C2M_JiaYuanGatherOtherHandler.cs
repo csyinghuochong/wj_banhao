@@ -65,9 +65,9 @@ namespace ET
                         }
                         if (jiaYuanPlan.StealNumber >= 1)
                         {
-                            response.Error = ErrorCode.ERR_JiaYuanSteal;
-                            reply();
-                            return;
+                           // response.Error = ErrorCode.ERR_JiaYuanSteal;
+                           // reply();
+                           // return;
                         }
 
                         response.Error = JiaYuanHelper.GetPlanShouHuoItem(jiaYuanPlan.ItemId, jiaYuanPlan.StartTime, jiaYuanPlan.GatherNumber, jiaYuanPlan.GatherLastTime);

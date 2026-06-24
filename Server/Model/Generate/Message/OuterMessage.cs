@@ -8718,6 +8718,9 @@ namespace ET
 		[ProtoMember(18)]
 		public List<string> ActiveRecord = new List<string>();
 
+		[ProtoMember(19)]
+		public long LastUpdateGoldTime { get; set; }
+
 	}
 
 	[Message(OuterOpcode.DonationRecord)]

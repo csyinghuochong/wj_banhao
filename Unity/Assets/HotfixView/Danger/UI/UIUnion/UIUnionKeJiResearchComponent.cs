@@ -147,6 +147,10 @@ namespace ET
                     {
                         continue;
                     }
+                    if (self.UnionMyInfo.KeJiActiteTime == 0)
+                    {
+                        continue;
+                    }
 
                     researchItemComponent.SetYanJiu();
                     break;

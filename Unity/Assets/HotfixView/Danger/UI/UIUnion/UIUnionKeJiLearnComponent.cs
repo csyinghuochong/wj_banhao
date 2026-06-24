@@ -45,7 +45,10 @@ namespace ET
             self.UICommonItem.SetActive(false);
             self.StartBtn.GetComponent<Button>().onClick.AddListener(() => { self.OnStartBtn().Coroutine(); });
 
-            self.InitItemList().Coroutine();
+    
+            self.GetParent<UI>().OnUpdateUI = () => { self.OnUpdateUI(); };
+
+            //self.InitItemList().Coroutine();
         }
     }
 
@@ -67,7 +70,7 @@ namespace ET
 
     public static class UIUnionKeJiLearnComponentSystem
     {
-        public static async ETTask InitItemList(this UIUnionKeJiLearnComponent self)
+        public static async ETTask OnUpdateUI(this UIUnionKeJiLearnComponent self)
         {
             Unit unit = UnitHelper.GetMyUnitFromZoneScene(self.ZoneScene());
             long unionId = unit.GetUnionId();
@@ -77,28 +80,40 @@ namespace ET
 
             self.UnionMyInfo = respose.UnionMyInfo;
 
+            self.InitItemList().Coroutine();
+        }
+
+
+        public static async ETTask InitItemList(this UIUnionKeJiLearnComponent self)
+        {
+           
+
             self.UserInfo = self.ZoneScene().GetComponent<UserInfoComponent>().UserInfo;
 
-            for (int i = 0; i < self.UserInfo.UnionKeJiList.Count; i++)
+
+            if (self.UIUnionKeJiLearnItemComponentList.Count == 0)
             {
-                UIUnionKeJiLearnItemComponent ui = null;
-
-                GameObject go = UnityEngine.Object.Instantiate(self.UIUnionKeJiLearnItem);
-                ui = self.AddChild<UIUnionKeJiLearnItemComponent, GameObject>(go);
-                ui.ClickAction = self.UpdateInfo;
-                UnionKeJiConfig unionKeJiConfig = UnionKeJiConfigCategory.Instance.Get(self.UnionMyInfo.UnionKeJiList[i]);
-                string path = ABPathHelper.GetAtlasPath_2(ABAtlasTypes.OtherIcon, unionKeJiConfig.Icon);
-                Sprite sp = ResourcesComponent.Instance.LoadAsset<Sprite>(path);
-                if (!self.AssetPath.Contains(path))
+                for (int i = 0; i < self.UserInfo.UnionKeJiList.Count; i++)
                 {
-                    self.AssetPath.Add(path);
-                }
+                    UIUnionKeJiLearnItemComponent ui = null;
 
-                ui.IconImg.GetComponent<Image>().sprite = sp;
-                ui.UpdateInfo(i, self.UserInfo.UnionKeJiList[i], self.UnionMyInfo.UnionKeJiList[i]);
-                self.UIUnionKeJiLearnItemComponentList.Add(ui);
-                UICommonHelper.SetParent(go, self.UIUnionKeJiLearnItemListNode);
-                go.SetActive(true);
+                    GameObject go = UnityEngine.Object.Instantiate(self.UIUnionKeJiLearnItem);
+                    ui = self.AddChild<UIUnionKeJiLearnItemComponent, GameObject>(go);
+                    ui.ClickAction = self.UpdateInfo;
+                    UnionKeJiConfig unionKeJiConfig = UnionKeJiConfigCategory.Instance.Get(self.UnionMyInfo.UnionKeJiList[i]);
+                    string path = ABPathHelper.GetAtlasPath_2(ABAtlasTypes.OtherIcon, unionKeJiConfig.Icon);
+                    Sprite sp = ResourcesComponent.Instance.LoadAsset<Sprite>(path);
+                    if (!self.AssetPath.Contains(path))
+                    {
+                        self.AssetPath.Add(path);
+                    }
+
+                    ui.IconImg.GetComponent<Image>().sprite = sp;
+                    ui.UpdateInfo(i, self.UserInfo.UnionKeJiList[i], self.UnionMyInfo.UnionKeJiList[i]);
+                    self.UIUnionKeJiLearnItemComponentList.Add(ui);
+                    UICommonHelper.SetParent(go, self.UIUnionKeJiLearnItemListNode);
+                    go.SetActive(true);
+                }
             }
 
             self.UpdateInfo(0);

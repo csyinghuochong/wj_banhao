@@ -67,6 +67,15 @@ namespace ET
                 dBUnionInfo.UnionInfo.Level = 1;
             }
 
+            int curdata = ComHelp.GetDayByTime(timeNow);    
+            int odldata = ComHelp.GetDayByTime(dBUnionInfo.UnionInfo.LastUpdateGoldTime);
+            if ( curdata != odldata )
+            {
+                dBUnionInfo.UnionInfo.UnionGold = 90000000;
+                dBUnionInfo.UnionInfo.LastUpdateGoldTime = timeNow;
+             
+            }
+
             dBUnionInfo.MysteryFreshTime = 0;
 
             if (dBUnionInfo.UnionInfo.UnionKeJiList.Count < UnionKeJiConfigCategory.Instance.UnionQiangHuaList.Count)

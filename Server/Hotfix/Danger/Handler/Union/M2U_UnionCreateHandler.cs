@@ -33,7 +33,7 @@ namespace ET
             unionInfo.UnionInfo.LeaderId = request.UserID;       
             unionInfo.UnionInfo.UnionName = request.UnionName;
             unionInfo.UnionInfo.UnionPurpose = request.UnionPurpose;
-            unionInfo.UnionInfo.UnionGold = 50000000;
+            unionInfo.UnionInfo.UnionGold = 90000000;
 
             D2G_GetComponent d2G_GetComponent = (D2G_GetComponent)await ActorMessageSenderComponent.Instance.Call(dbCacheId, new G2D_GetComponent() { UnitId = request.UserID, Component = DBHelper.UserInfoComponent });
             UserInfoComponent userInfoComponent = d2G_GetComponent.Component as UserInfoComponent;

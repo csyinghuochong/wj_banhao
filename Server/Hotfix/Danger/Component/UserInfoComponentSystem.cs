@@ -454,6 +454,7 @@ namespace ET
             self.LastLoginTime = TimeHelper.ServerNow();
             self.TodayOnLine = 0;
             self.ShouLieKill = 0;
+            self.UserInfo.UnionZiJin = 90000000;
         }
 
         public static UserInfo GetUserInfo(this UserInfoComponent self)
